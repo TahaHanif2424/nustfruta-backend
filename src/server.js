@@ -14,7 +14,7 @@ const app = express();
 
 // Middleware
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'https://www.nustfruta.live',
+  origin: process.env.FRONTEND_URL || 'https://www.nustfruta.live' || 'https://admin.nustfruta.live',
   credentials: true,
   optionsSuccessStatus: 200
 };
