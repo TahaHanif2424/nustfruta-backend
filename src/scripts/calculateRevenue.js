@@ -1,0 +1,50 @@
+const mongoose = require('mongoose');
+const Order = require('../models/Order');
+const Revenue = require('../models/Revenue');
+require('dotenv').config();
+
+const calculateRevenue = async () => {
+  try {
+    // Connect to MongoDB
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log('MongoDB Connected...');
+
+    // Calculate total revenue from all orders
+    const result = await Order.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalRevenue: { $sum: '$totalAmount' }
+        }
+      }
+    ]);
+
+    const totalRevenue = result.length > 0 ? result[0].totalRevenue : 0;
+
+    // Update or create revenue document
+    let revenue = await Revenue.findOne();
+
+    if (!revenue) {
+      revenue = await Revenue.create({
+        totalRevenue: totalRevenue,
+        lastUpdated: new Date()
+      });
+      console.log('Revenue document created');
+    } else {
+      revenue.totalRevenue = totalRevenue;
+      revenue.lastUpdated = new Date();
+      await revenue.save();
+      console.log('Revenue document updated');
+    }
+
+    console.log(`Total Revenue: Rs. ${totalRevenue}`);
+    console.log('Revenue calculation completed successfully!');
+
+    process.exit(0);
+  } catch (error) {
+    console.error('Error calculating revenue:', error);
+    process.exit(1);
+  }
+};
+
+calculateRevenue();
