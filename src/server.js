@@ -13,8 +13,30 @@ connectDB();
 const app = express();
 
 // Middleware
+const allowedOrigins = [
+  'https://www.nustfruta.live',
+  'https://nustfruta.live',
+  'https://admin.nustfruta.live',
+  'http://localhost:5173',
+  'http://localhost:3000'
+];
+
+// Add FRONTEND_URL from env if it exists
+if (process.env.FRONTEND_URL) {
+  allowedOrigins.push(process.env.FRONTEND_URL);
+}
+
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'https://www.nustfruta.live' || 'https://admin.nustfruta.live',
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 200
 };
