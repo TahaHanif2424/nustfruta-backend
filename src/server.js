@@ -14,7 +14,7 @@ const app = express();
 
 // Middleware
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'https://nustfruta-fresh-delivery.vercel.app',
+  origin: process.env.FRONTEND_URL || 'https://www.nustfruta.live',
   credentials: true,
   optionsSuccessStatus: 200
 };
@@ -22,19 +22,13 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Serve static files from public directory
+app.use(express.static('public'));
+
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));
-
-// Root route
-app.get('/', (req, res) => {
-  res.json({
-    success: true,
-    message: 'NustFruta API is running',
-    version: '1.0.0'
-  });
-});
 
 // Health check route
 app.get('/api/health', (req, res) => {
