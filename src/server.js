@@ -17,8 +17,7 @@ const allowedOrigins = [
   'https://www.nustfruta.live',
   'https://nustfruta.live',
   'https://admin.nustfruta.live',
-  'http://localhost:5173',
-  'http://localhost:3000'
+  'http://localhost:8080'
 ];
 
 // Add FRONTEND_URL from env if it exists
