@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
 const Product = require('../models/Product');
 
-// Load environment variables
-dotenv.config();
+// Hardcoded MongoDB URI
+const MONGODB_URI = 'mongodb+srv://tahahanif009_db_user:abd24hui@shahzil.fqysiha.mongodb.net/nustfruta?retryWrites=true&w=majority&appName=shahzil';
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(MONGODB_URI)
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error('MongoDB connection error:', err));
 

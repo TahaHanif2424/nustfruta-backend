@@ -1,20 +1,22 @@
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
 const Admin = require('../models/Admin');
 
-// Load environment variables
-dotenv.config();
+// Hardcoded configuration
+const MONGODB_URI = 'mongodb+srv://tahahanif009_db_user:abd24hui@shahzil.fqysiha.mongodb.net/nustfruta?retryWrites=true&w=majority&appName=shahzil';
+const ADMIN_USERNAME = 'admin';
+const ADMIN_EMAIL = 'admin@nustfruta.com';
+const ADMIN_PASSWORD = 'admin123';
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(MONGODB_URI)
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error('MongoDB connection error:', err));
 
 const seedAdmin = async () => {
   try {
-    const adminUsername = process.env.ADMIN_USERNAME || 'admin';
-    const adminEmail = process.env.ADMIN_EMAIL || 'admin@nustfruta.com';
-    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+    const adminUsername = ADMIN_USERNAME;
+    const adminEmail = ADMIN_EMAIL;
+    const adminPassword = ADMIN_PASSWORD;
 
     // Check if admin already exists
     const existingAdmin = await Admin.findOne({ username: adminUsername });

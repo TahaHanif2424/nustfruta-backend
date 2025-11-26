@@ -7,10 +7,14 @@ const {
   sendUnauthorized
 } = require('../utils/responseHandler');
 
+// Hardcoded JWT configuration
+const JWT_SECRET = 'your_super_secret_jwt_key_change_this_in_production_use_random_string';
+const JWT_EXPIRE = '30d';
+
 // Generate JWT Token
 const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE || '30d'
+  return jwt.sign({ id }, JWT_SECRET, {
+    expiresIn: JWT_EXPIRE
   });
 };
 

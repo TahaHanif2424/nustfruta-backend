@@ -1,6 +1,9 @@
 const jwt = require('jsonwebtoken');
 const Admin = require('../models/Admin');
 
+// Hardcoded JWT secret
+const JWT_SECRET = 'your_super_secret_jwt_key_change_this_in_production_use_random_string';
+
 const authMiddleware = async (req, res, next) => {
   try {
     // Get token from header
@@ -14,7 +17,7 @@ const authMiddleware = async (req, res, next) => {
     }
 
     // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET);
 
     // Find admin
     const admin = await Admin.findById(decoded.id).select('-password');

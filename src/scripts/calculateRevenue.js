@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
 const Order = require('../models/Order');
 const Revenue = require('../models/Revenue');
-require('dotenv').config();
+
+// Hardcoded MongoDB URI
+const MONGO_URI = 'mongodb+srv://tahahanif009_db_user:abd24hui@shahzil.fqysiha.mongodb.net/nustfruta?retryWrites=true&w=majority&appName=shahzil';
 
 const calculateRevenue = async () => {
   try {
     // Connect to MongoDB
-    await mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(MONGO_URI);
     console.log('MongoDB Connected...');
 
     // Calculate total revenue from all orders

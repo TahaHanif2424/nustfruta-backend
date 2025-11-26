@@ -3,7 +3,8 @@
     "allow": [
       "Bash(git add:*)",
       "WebFetch(domain:www.heroku.com)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(test:*)"
     ],
     "deny": [],
     "ask": []
