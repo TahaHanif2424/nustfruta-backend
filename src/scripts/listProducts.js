@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Product = require('../models/Product');
 
 // Hardcoded MongoDB URI
-const MONGODB_URI = 'mongodb+srv://tahahanif009_db_user:abd24hui@shahzil.fqysiha.mongodb.net/nustfruta?retryWrites=true&w=majority&appName=shahzil';
+const MONGODB_URI = 'mongodb+srv://tahahanif009_db_user:abd24hui@shahzil.fqysiha.mongodb.net/NustFruta?retryWrites=true&w=majority&appName=shahzil';
 
 // Connect to MongoDB
 mongoose.connect(MONGODB_URI)

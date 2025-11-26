@@ -13,30 +13,8 @@ connectDB();
 // Initialize express app
 const app = express();
 
-// Middleware
-const allowedOrigins = [
-  'https://www.nustfruta.live',
-  'https://nustfruta.live',
-  'https://admin.nustfruta.live',
-  'http://localhost:8080',
-  FRONTEND_URL
-];
-
-const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-  optionsSuccessStatus: 200
-};
-app.use(cors(corsOptions));
+// Middleware - Allow all origins
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

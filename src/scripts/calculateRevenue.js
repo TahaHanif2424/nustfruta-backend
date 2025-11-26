@@ -3,7 +3,7 @@ const Order = require('../models/Order');
 const Revenue = require('../models/Revenue');
 
 // Hardcoded MongoDB URI
-const MONGO_URI = 'mongodb+srv://tahahanif009_db_user:abd24hui@shahzil.fqysiha.mongodb.net/nustfruta?retryWrites=true&w=majority&appName=shahzil';
+const MONGO_URI = 'mongodb+srv://tahahanif009_db_user:abd24hui@shahzil.fqysiha.mongodb.net/NustFruta?retryWrites=true&w=majority&appName=shahzil';
 
 const calculateRevenue = async () => {
   try {
