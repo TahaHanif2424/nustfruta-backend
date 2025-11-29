@@ -65,8 +65,6 @@ const getOrder = async (req, res) => {
 const createOrder = async (req, res) => {
   try {
     if (process.env.NODE_ENV === 'development') {
-      console.log('=== Creating Order ===');
-      console.log('Request body:', JSON.stringify(req.body, null, 2));
     }
 
     const {
@@ -83,7 +81,6 @@ const createOrder = async (req, res) => {
     // Validate required fields
     if (!customerName || !customerPhone || !hostelName || !roomNumber || !items || items.length === 0) {
       if (process.env.NODE_ENV === 'development') {
-        console.log('Validation failed: missing required fields');
       }
       return res.status(400).json({
         success: false,
@@ -152,8 +149,6 @@ const createOrder = async (req, res) => {
     }
 
     if (process.env.NODE_ENV === 'development') {
-      console.log('Order created successfully:', order._id);
-      console.log('Total revenue updated:', revenue.totalRevenue);
     }
     res.status(201).json({
       success: true,

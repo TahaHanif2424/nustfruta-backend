@@ -5,7 +5,6 @@ const Product = require('../models/Product');
 // @access  Public
 const getProducts = async (req, res) => {
   try {
-    console.log('📦 Fetching products...');
     const { featured, category, inStock } = req.query;
 
     // Build filter
@@ -14,11 +13,7 @@ const getProducts = async (req, res) => {
     if (category) filter.category = category;
     if (inStock !== undefined) filter.inStock = inStock === 'true';
 
-    console.log('🔍 Query filters:', filter);
-
-    const products = await Product.find(filter).sort({ createdAt: -1 });
-
-    console.log(`✅ Found ${products.length} products`);
+    const products = await Product.find(filter).sort({ featured: -1, createdAt: -1 });
 
     res.json({
       success: true,
@@ -40,19 +35,15 @@ const getProducts = async (req, res) => {
 // @access  Public
 const getProduct = async (req, res) => {
   try {
-    console.log(`📦 Fetching product with ID: ${req.params.id}`);
 
     const product = await Product.findById(req.params.id);
 
     if (!product) {
-      console.log(`❌ Product not found with ID: ${req.params.id}`);
       return res.status(404).json({
         success: false,
         message: 'Product not found'
       });
     }
-
-    console.log(`✅ Found product: ${product.name}`);
 
     res.json({
       success: true,

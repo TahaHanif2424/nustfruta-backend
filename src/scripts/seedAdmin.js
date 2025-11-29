@@ -22,7 +22,6 @@ const seedAdmin = async () => {
     const existingAdmin = await Admin.findOne({ username: adminUsername });
 
     if (existingAdmin) {
-      console.log('Admin already exists');
       process.exit(0);
     }
 
@@ -32,12 +31,6 @@ const seedAdmin = async () => {
       email: adminEmail,
       password: adminPassword
     });
-
-    console.log('Admin created successfully:');
-    console.log('Username:', admin.username);
-    console.log('Email:', admin.email);
-    console.log('Password:', adminPassword);
-    console.log('\nPlease change the password after first login!');
 
     process.exit(0);
   } catch (error) {

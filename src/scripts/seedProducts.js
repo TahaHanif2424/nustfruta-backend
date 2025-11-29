@@ -76,11 +76,9 @@ const seedProducts = async () => {
   try {
     // Clear existing products
     await Product.deleteMany({});
-    console.log('Existing products cleared');
 
     // Insert sample products
     await Product.insertMany(sampleProducts);
-    console.log(`${sampleProducts.length} sample products created successfully`);
 
     process.exit(0);
   } catch (error) {

@@ -9,7 +9,6 @@ const calculateRevenue = async () => {
   try {
     // Connect to MongoDB
     await mongoose.connect(MONGO_URI);
-    console.log('MongoDB Connected...');
 
     // Calculate total revenue from all orders
     const result = await Order.aggregate([
@@ -31,16 +30,11 @@ const calculateRevenue = async () => {
         totalRevenue: totalRevenue,
         lastUpdated: new Date()
       });
-      console.log('Revenue document created');
     } else {
       revenue.totalRevenue = totalRevenue;
       revenue.lastUpdated = new Date();
       await revenue.save();
-      console.log('Revenue document updated');
     }
-
-    console.log(`Total Revenue: Rs. ${totalRevenue}`);
-    console.log('Revenue calculation completed successfully!');
 
     process.exit(0);
   } catch (error) {
