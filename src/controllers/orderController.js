@@ -356,6 +356,66 @@ const getOrdersByPhone = async (req, res) => {
   }
 };
 
+// @desc    Search orders by date range
+// @route   GET /api/orders/search
+// @access  Private (Admin only)
+const searchOrdersByDate = async (req, res) => {
+  try {
+    const { startDate, endDate, status } = req.query;
+
+    if (!startDate || !endDate) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide startDate and endDate'
+      });
+    }
+
+    // Parse dates and set time boundaries
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0);
+
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999);
+
+    // Build filter
+    const filter = {
+      createdAt: {
+        $gte: start,
+        $lte: end
+      }
+    };
+
+    // Add status filter if provided
+    if (status) {
+      filter.status = status;
+    }
+
+    const orders = await Order.find(filter)
+      .populate('items.product', 'name image')
+      .sort({ createdAt: -1 });
+
+    // Calculate total revenue for the date range
+    const totalRevenue = orders.reduce((sum, order) => sum + order.totalAmount, 0);
+
+    res.json({
+      success: true,
+      count: orders.length,
+      totalRevenue,
+      dateRange: {
+        start: start.toISOString(),
+        end: end.toISOString()
+      },
+      data: orders
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message
+    });
+  }
+};
+
 // @desc    Get total revenue
 // @route   GET /api/orders/revenue/total
 // @access  Private (Admin only)
@@ -396,5 +456,6 @@ module.exports = {
   deleteOrder,
   getOrderStats,
   getOrdersByPhone,
-  getTotalRevenue
+  getTotalRevenue,
+  searchOrdersByDate
 };

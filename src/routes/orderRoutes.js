@@ -9,7 +9,8 @@ const {
   deleteOrder,
   getOrderStats,
   getOrdersByPhone,
-  getTotalRevenue
+  getTotalRevenue,
+  searchOrdersByDate
 } = require('../controllers/orderController');
 const authMiddleware = require('../middleware/auth');
 
@@ -19,6 +20,7 @@ router.get('/customer/:phone', getOrdersByPhone);
 
 // Private routes (Admin only)
 router.get('/', getOrders);
+router.get('/search', searchOrdersByDate);
 router.get('/stats', getOrderStats);
 router.get('/revenue/total', getTotalRevenue);
 router.get('/:id',  getOrder);
