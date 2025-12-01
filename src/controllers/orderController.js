@@ -75,7 +75,8 @@ const createOrder = async (req, res) => {
       roomNumber,
       items,
       paymentMethod,
-      notes
+      notes,
+      isPaid
     } = req.body;
 
     // Validate required fields
@@ -130,7 +131,8 @@ const createOrder = async (req, res) => {
       items: orderItems,
       totalAmount,
       paymentMethod,
-      notes
+      notes,
+      isPaid: isPaid === true ? true : false
     });
 
     // Update total revenue
