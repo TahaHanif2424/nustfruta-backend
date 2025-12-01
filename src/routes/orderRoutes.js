@@ -5,6 +5,7 @@ const {
   getOrder,
   createOrder,
   updateOrderStatus,
+  updatePaymentStatus,
   updateOrder,
   deleteOrder,
   getOrderStats,
@@ -25,6 +26,7 @@ router.get('/stats', getOrderStats);
 router.get('/revenue/total', getTotalRevenue);
 router.get('/:id',  getOrder);
 router.put('/:id/status',  updateOrderStatus);
+router.put('/:id/payment',  updatePaymentStatus);
 router.put('/:id',  updateOrder);
 router.delete('/:id',  deleteOrder);
 

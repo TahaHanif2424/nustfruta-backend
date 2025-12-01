@@ -217,6 +217,45 @@ const updateOrderStatus = async (req, res) => {
   }
 };
 
+// @desc    Update order payment status
+// @route   PUT /api/orders/:id/payment
+// @access  Private (Admin only)
+const updatePaymentStatus = async (req, res) => {
+  try {
+    const { isPaid } = req.body;
+
+    if (typeof isPaid !== 'boolean') {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide isPaid as a boolean value'
+      });
+    }
+
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: 'Order not found'
+      });
+    }
+
+    order.isPaid = isPaid;
+    await order.save();
+
+    res.json({
+      success: true,
+      data: order
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message
+    });
+  }
+};
+
 // @desc    Update order
 // @route   PUT /api/orders/:id
 // @access  Private (Admin only)
@@ -452,6 +491,7 @@ module.exports = {
   getOrder,
   createOrder,
   updateOrderStatus,
+  updatePaymentStatus,
   updateOrder,
   deleteOrder,
   getOrderStats,

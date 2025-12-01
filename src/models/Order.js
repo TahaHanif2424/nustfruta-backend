@@ -71,6 +71,10 @@ const orderSchema = new mongoose.Schema({
   notes: {
     type: String,
     trim: true
+  },
+  isPaid: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true
