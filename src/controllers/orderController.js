@@ -379,7 +379,25 @@ const getOrdersByPhone = async (req, res) => {
       });
     }
 
-    const orders = await Order.find({ customerPhone: phone })
+    // Trim whitespace from phone number
+    const trimmedPhone = phone.trim();
+
+    // Build phone number variants to search for both 0 and +92 formats
+    const phoneVariants = [trimmedPhone];
+
+    if (trimmedPhone.startsWith('0')) {
+      // If starts with 0, also search for +92 version
+      phoneVariants.push('+92' + trimmedPhone.substring(1));
+    } else if (trimmedPhone.startsWith('+92')) {
+      // If starts with +92, also search for 0 version
+      phoneVariants.push('0' + trimmedPhone.substring(3));
+    } else if (trimmedPhone.startsWith('92')) {
+      // If starts with 92 (without +), also search for 0 and +92 versions
+      phoneVariants.push('0' + trimmedPhone.substring(2));
+      phoneVariants.push('+' + trimmedPhone);
+    }
+
+    const orders = await Order.find({ customerPhone: { $in: phoneVariants } })
       .populate('items.product', 'name image price')
       .sort({ createdAt: -1 });
 
